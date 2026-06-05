@@ -6,6 +6,8 @@ const store = useMovieStore()
 
 onMounted(() => {
   store.fetchMovies()
+  // [12주차 추가] 상세 정보에 갔다 돌아왔을 때 브라우저 탭 이름을 원래대로 복구합니다.
+  document.title = '🍿 국내 극장 화제작 (인기순)'
 })
 </script>
 
@@ -34,6 +36,7 @@ onMounted(() => {
         />
         <div v-else class="poster-placeholder">이미지 준비 중</div>
         <div class="card-content">
+          <!-- 11주차 내용 동일 -->
           <h3 class="title">{{ movie.title }}</h3>
           <p class="release-date" v-if="movie.release_date">📅 개봉일: {{ movie.release_date }}</p>
           <p class="rating">⭐ {{ movie.vote_average.toFixed(1) }} / 10</p>
@@ -51,6 +54,12 @@ onMounted(() => {
           >
             {{ movie.isFavorite ? '❤️ 찜 해제' : '🤍 찜하기' }}
           </button>
+          <!-- [12주차 RouterLink 추가] -->
+          <RouterLink
+            :to="`/movies/${movie.id}`"
+            class="stretched-link"
+            :aria-label="`${movie.title} 상세 정보 보기`"
+          />
         </div>
       </div>
     </div>
@@ -101,6 +110,7 @@ onMounted(() => {
 }
 
 .movie-card {
+  position: relative;
   border-radius: 12px;
   overflow: hidden;
   background: white;
@@ -172,6 +182,8 @@ onMounted(() => {
 }
 
 .fav-btn {
+  position: relative;
+  z-index: 2;
   width: 100%;
   padding: 12px;
   cursor: pointer;
@@ -188,5 +200,14 @@ onMounted(() => {
 .fav-btn.active {
   background: #ff4757;
   color: white;
+}
+
+.stretched-link {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
 }
 </style>
