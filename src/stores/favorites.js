@@ -13,7 +13,6 @@ export const useFavoritesStore = defineStore('favorites', () => {
     return (sum / favoriteMovies.value.length).toFixed(1) 
   })
 
-  // 3. Actions (액션)
   const toggleFavorite = (movie) => {
     const index = favoriteMovies.value.findIndex((m) => m.id === movie.id)
     if (index === -1) {
@@ -27,7 +26,6 @@ export const useFavoritesStore = defineStore('favorites', () => {
     favoriteMovies.value = []
   }
 
-  // favoriteMovies가 바뀔 때마다 브라우저 스토리지에 덮어씁니다.
   watch(
     favoriteMovies,
     (newVal) => {
