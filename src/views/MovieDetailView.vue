@@ -128,23 +128,24 @@ const generateAIReview = async () => {
               <span class="f-label">글로벌 흥행 수익</span>
               <span class="f-value revenue-color">{{ formattedRevenue }}</span>
             </div>
-            <div class="synopsis-container">
-              <h3 class="synopsis-title">시놉시스 줄거리</h3>
-              <p class="synopsis-text">
-                {{ store.selectedMovie?.overview || '줄거리가 없습니다.' }}
-              </p>
-            </div>
+          </div>
 
-            <hr class="divider" />
+          <div class="synopsis-container">
+            <h3 class="synopsis-title">시놉시스 줄거리</h3>
+            <p class="synopsis-text">
+              {{ store.selectedMovie?.overview || '줄거리가 없습니다.' }}
+            </p>
+          </div>
 
-            <div class="ai-section">
-              <button @click="generateAIReview" class="ai-btn" :disabled="isAiLoading">
-                {{ isAiLoading ? '🤖 생성 중...' : '✨ AI 맞춤 추천사 듣기' }}
-              </button>
+          <hr class="divider" />
 
-              <div v-if="aiReview" class="ai-result-box">
-                <p>{{ aiReview }}</p>
-              </div>
+          <div class="ai-section">
+            <button @click="generateAIReview" class="ai-btn" :disabled="isAiLoading">
+              {{ isAiLoading ? '🤖 생성 중...' : '✨ AI 맞춤 추천사 듣기' }}
+            </button>
+
+            <div v-if="aiReview" class="ai-result-box">
+              <p>{{ aiReview }}</p>
             </div>
           </div>
         </div>
@@ -351,10 +352,9 @@ const generateAIReview = async () => {
 }
 
 .synopsis-container {
-  grid-column: 1 / -1;
   display: flex;
   flex-direction: column;
-  margin-top: 10px;
+  margin-top: 30px;
 }
 
 .synopsis-title {
