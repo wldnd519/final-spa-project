@@ -1,9 +1,12 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { RouterLink, RouterView } from 'vue-router'
+import { useRouter } from 'vue-router'
 import { useMovieStore } from './stores/movieStore'
 
 const store = useMovieStore()
+const router = useRouter()
+const searchKeyword = ref('')
 
 const totalFavoritesCount = computed(() => {
   return store.favorites.length
@@ -21,6 +24,21 @@ const averageFavoritesRating = computed(() => {
   const calculatedAverage = totalRatingSum / store.favorites.length
   return calculatedAverage.toFixed(1)
 })
+
+const goSearch = () => {
+  const keyword = searchKeyword.value.trim()
+
+  if (!keyword) {
+    return
+  }
+
+  router.push({
+    name: 'search-results',
+    query: {
+      q: keyword,
+    },
+  })
+}
 </script>
 
 <template>
@@ -34,7 +52,17 @@ const averageFavoritesRating = computed(() => {
         <nav class="nav-menu">
           <RouterLink to="/" class="nav-item">홈</RouterLink>
           <RouterLink to="/movies" class="nav-item">영화 목록</RouterLink>
+          <RouterLink to="/favorites" class="nav-item">찜 목록</RouterLink>
         </nav>
+        <form class="search-form" @submit.prevent="goSearch">
+          <input
+            v-model="searchKeyword"
+            type="text"
+            class="search-input"
+            placeholder="영화 제목 검색"
+          />
+          <button type="submit" class="search-btn">검색</button>
+        </form>
         <div class="header-dashboard">
           <div class="dashboard-badge favorite-count">
             <span class="badge-label">❤️ 찜한 작품</span>
@@ -126,6 +154,44 @@ const averageFavoritesRating = computed(() => {
 .router-link-active.nav-item {
   color: #ff4757;
   background-color: rgba(255, 87, 87, 0.1);
+}
+
+.search-form {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.search-input {
+  width: 180px;
+  padding: 9px 12px;
+  border: 1px solid #3f4656;
+  border-radius: 20px;
+  background-color: #2f3542;
+  color: #ffffff;
+  outline: none;
+}
+
+.search-input::placeholder {
+  color: #a4b0be;
+}
+
+.search-input:focus {
+  border-color: #ff4757;
+}
+
+.search-btn {
+  padding: 9px 14px;
+  border: none;
+  border-radius: 20px;
+  background-color: #ff4757;
+  color: #ffffff;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.search-btn:hover {
+  background-color: #ff6b81;
 }
 
 .header-dashboard {

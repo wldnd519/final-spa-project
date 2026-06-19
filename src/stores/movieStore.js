@@ -93,6 +93,17 @@ export const useMovieStore = defineStore('movie', () => {
     }
   }
 
+  const removeFavorite = (movieId) => {
+    favorites.value = favorites.value.filter((movie) => movie.id !== movieId)
+
+    const movie = movies.value.find((m) => m.id === movieId)
+    if (movie) {
+      movie.isFavorite = false
+    }
+
+    sessionStorage.setItem('favorites', JSON.stringify(favorites.value))
+  }
+
   return {
     movies,
     favorites,
@@ -100,6 +111,7 @@ export const useMovieStore = defineStore('movie', () => {
     errorMessage,
     fetchMovies,
     toggleFavorite,
+    removeFavorite,
     selectedMovie,
     fetchMovieDetail,
   }

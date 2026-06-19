@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import MoviesView from '../views/MoviesView.vue'
+import SearchResultsView from '../views/SearchResultsView.vue'
+import FavoritesView from '../views/FavoritesView.vue'
 
 import MovieDetailView from '../views/MovieDetailView.vue'
 import NotFoundView from '../views/NotFoundView.vue'
@@ -19,11 +21,21 @@ const router = createRouter({
       component: MoviesView,
     },
     {
+      path: '/search',
+      name: 'search-results',
+      component: SearchResultsView,
+    },
+    {
+      path: '/favorites',
+      name: 'favorites',
+      component: FavoritesView,
+    },
+    {
       path: '/movies/:id',
       name: 'movie-detail',
       component: MovieDetailView,
     },
-    // [추가] 정해진 주소가 아닌 모든 경로(:pathMatch)를 404 페이지로 연결!
+      
     {
       path: '/:pathMatch(.*)*',
       name: 'not-found',
